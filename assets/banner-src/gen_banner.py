@@ -15,7 +15,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 OUT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # -> assets/
 S = 2  # supersample / retina scale
-W, H = 1200 * S, 300 * S
+W, H = 1200 * S, 320 * S
 
 FONTS = "C:/Windows/Fonts/"
 MONO_F = "CascadiaCode.ttf"
@@ -91,10 +91,10 @@ def compose(t, typed_text, cursor_on):
     cursor block trails it when `cursor_on`."""
     img = desktop(t)
 
-    mx, my = 34 * S, 26 * S
+    mx, my = 18 * S, 15 * S
     win = (mx, my, W - mx, H - my)
-    radius = 24 * S
-    titlebar_h = 66 * S
+    radius = 22 * S
+    titlebar_h = 58 * S
 
     # drop shadow (offset + blur, never a flat halo)
     shadow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
@@ -132,11 +132,11 @@ def compose(t, typed_text, cursor_on):
            title, font=tf, fill=hex_rgb(t["title"]))
 
     # terminal session
-    pf = font(17)
-    of = font(16)
-    nf = font(40)
-    cx0 = win[0] + 48 * S
-    y = win[1] + titlebar_h + 30 * S
+    pf = font(18)
+    of = font(17)
+    nf = font(46)
+    cx0 = win[0] + 46 * S
+    y = win[1] + titlebar_h + 34 * S
 
     def prompt(cmd_segs):
         base = [("vedanth@portfolio", t["green"]), (" ", t["muted"]),
@@ -145,18 +145,18 @@ def compose(t, typed_text, cursor_on):
         return base + cmd_segs
 
     draw_segs(d, cx0, y, prompt([("whoami", t["mauve"]), (" --name", t["yellow"])]), pf)
-    y += 21 * S
+    y += 26 * S
 
     d.text((cx0, y), "VEDANTH  M  S", font=nf, fill=hex_rgb(t["name"]),
            stroke_width=max(1, S // 2), stroke_fill=hex_rgb(t["name"]))
-    y += 46 * S
+    y += 60 * S
 
     draw_segs(d, cx0, y, prompt([("cat", t["mauve"]), (" role.txt", t["blue"])]), pf)
-    y += 19 * S
+    y += 22 * S
     draw_segs(d, cx0, y, [("Backend & ", t["muted"]),
                           ("AI-Integrated", t["peach"]),
                           (" Software Engineer", t["muted"])], of)
-    y += 22 * S
+    y += 30 * S
 
     # last line: prompt prefix + typed tagline + blinking cursor
     endx = draw_segs(d, cx0, y, prompt([]), pf)

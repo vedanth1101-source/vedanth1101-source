@@ -6,10 +6,10 @@ OWN-WORLD: Catppuccin Mocha (bg #11111b, base #1e1e2e) with a peach #fab387
   signature; mono is the native medium (real commands), not a costume.
   Header is a rendered terminal window (traffic lights, syntax coloring).
 STORY: Visitor reads a backend/AI engineer driving a terminal — lands on the
-  name, scans role, work, stack, activity like `ls`/`cat`/`git log` output.
-FIRST VIEWPORT: terminal-window banner — `whoami --name` → VEDANTH M S large,
-  `cat role.txt` → role, then the last prompt line TYPES rotating taglines
-  (animated GIF) with a blinking peach cursor. Then entry links + badges.
+  name, reads `cat about.txt`, then scans work, stack, activity as commands.
+FIRST VIEWPORT: large terminal-window banner — `whoami --name` → VEDANTH M S,
+  `cat role.txt` → role, last line TYPES rotating taglines (animated GIF) with
+  a blinking peach cursor. Then `cat about.txt`, portfolio link, entry badges.
 FORM: user-pinned Terminal/TUI (chosen from three concepts). Banner rendered
   deterministically by assets/banner-src/gen_banner.py (Pillow), not a screenshot;
   animated GIF for the typing loop, static PNG as the <picture> fallback.
@@ -23,7 +23,24 @@ FORM: user-pinned Terminal/TUI (chosen from three concepts). Banner rendered
   <img alt="Vedanth M S — Backend & AI-Integrated Software Engineer" src="./assets/banner-dark.png" width="100%">
 </picture>
 
-<br><br>
+</div>
+
+```text
+vedanth@portfolio ~ % cat about.txt
+
+  Role ......... Backend & AI-Integrated Software Engineer
+  Focus ........ rule engines · dev tooling · agentic systems
+  Languages .... Java · Python · TypeScript · C
+  Backend ...... Spring Boot · Node.js
+  Frontend ..... React · Vite · Tailwind
+  Data ......... MySQL · SQLite · Docker · Vercel
+  AI ........... Gemini · Ollama · RAG
+  Latency ...... decisions in single-digit milliseconds
+  Currently .... shipping backend systems end to end
+  Open to ...... backend & AI-integrated roles
+```
+
+<div align="center">
 
 **[⟶ &nbsp;Step into the interactive 3D portfolio](https://vedanth1101-source.github.io/vedanth-portfolio/)**
 
@@ -41,25 +58,6 @@ FORM: user-pinned Terminal/TUI (chosen from three concepts). Banner rendered
 </div>
 
 ---
-
-<div align="center">
-
-### $ whoami
-
-I'm a final-year Computer Science student and Software Engineering intern who builds **backend systems and AI-integrated applications** — rule engines, developer tooling, and agentic platforms. I care about correctness under concurrency, honest abstractions, and shipping things end to end rather than to a demo.
-
-</div>
-
-```text
-vedanth@portfolio ~ % cat about.txt
-
-  role      Backend & AI-Integrated Software Engineer
-  focus     rule engines · developer tooling · agentic systems
-  stack     Java 21 · Spring Boot · React · TypeScript · Python
-  latency   decisions in single-digit milliseconds
-  edu       final-year CS · SSN College of Engineering, Chennai
-  langs     English · Tamil · Kannada
-```
 
 <div align="center">
 
