@@ -77,8 +77,6 @@ Translates plain-English questions into SQL over a local Ollama model, with a de
 
 ### $ cat stack.txt
 
-<div align="center">
-
 **Languages**<br>
 <img src="https://skillicons.dev/icons?i=java,python,ts,js,c&theme=dark" height="40" />
 
@@ -95,8 +93,6 @@ Translates plain-English questions into SQL over a local Ollama model, with a de
 <img src="https://skillicons.dev/icons?i=git,vscode,postman&theme=dark" height="40" />
 
 `Gemini API` &nbsp;·&nbsp; `Ollama` &nbsp;·&nbsp; `RAG`
-
-</div>
 
 ---
 
