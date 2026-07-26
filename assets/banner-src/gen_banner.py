@@ -1,9 +1,14 @@
-"""Render the profile banner (dark + light) as high-res PNGs with PIL.
+"""Render the profile banner (dark + light) with PIL.
 
 Concept: a real terminal window (Catppuccin Mocha / Latte), not mono-as-costume.
 Title bar with traffic lights, a live zsh session with syntax-accurate coloring,
-the name as the large output of `whoami --name`, and a blinking cursor block.
-Deterministic — NOT a browser screenshot. Output is 2400x600 (2x supersampled).
+the name as the large output of `whoami --name`, and a last prompt line that
+TYPES OUT rotating taglines with a blinking cursor.
+
+Each theme is written twice:
+  - banner-<theme>.png  : static fallback (first tagline fully typed)
+  - banner-<theme>.gif  : animated typing loop
+Deterministic — NOT a browser screenshot. Rendered at 2x, GIF downscaled to 1x.
 """
 import os
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
@@ -14,6 +19,13 @@ W, H = 1200 * S, 300 * S
 
 FONTS = "C:/Windows/Fonts/"
 MONO_F = "CascadiaCode.ttf"
+
+# Taglines typed on the last prompt line (rotating). Kept truthful.
+MESSAGES = [
+    "rule engines · developer tooling · agentic systems",
+    "decisions in single-digit milliseconds",
+    "final-year CS @ SSN College of Engineering",
+]
 
 
 def font(px):
@@ -60,9 +72,9 @@ def desktop(t):
     px = img.load()
     for y in range(H):
         f = y / (H - 1)
-        px_row = tuple(round(top[i] * (1 - f) + bot[i] * f) for i in range(3))
+        row = tuple(round(top[i] * (1 - f) + bot[i] * f) for i in range(3))
         for x in range(W):
-            px[x, y] = px_row
+            px[x, y] = row
     return img.convert("RGBA")
 
 
@@ -74,17 +86,17 @@ def draw_segs(d, x, y, segs, fnt):
     return x
 
 
-def build(theme_name):
-    t = THEMES[theme_name]
+def compose(t, typed_text, cursor_on):
+    """Full terminal frame. `typed_text` fills the last prompt line; the peach
+    cursor block trails it when `cursor_on`."""
     img = desktop(t)
 
-    # ---- window geometry ----
     mx, my = 34 * S, 26 * S
     win = (mx, my, W - mx, H - my)
     radius = 24 * S
     titlebar_h = 66 * S
 
-    # ---- drop shadow (offset + blur, never a flat halo) ----
+    # drop shadow (offset + blur, never a flat halo)
     shadow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     sd = ImageDraw.Draw(shadow)
     off = 10 * S
@@ -93,10 +105,9 @@ def build(theme_name):
     shadow = shadow.filter(ImageFilter.GaussianBlur(22 * S))
     img.alpha_composite(shadow)
 
-    # ---- window body + title bar ----
+    # window body + title bar
     d = ImageDraw.Draw(img)
     d.rounded_rectangle(win, radius=radius, fill=hex_rgb(t["window"]))
-    # title bar: rounded top, squared bottom (clip via a second fill)
     d.rounded_rectangle((win[0], win[1], win[2], win[1] + titlebar_h + radius),
                         radius=radius, fill=hex_rgb(t["titlebar"]))
     d.rectangle((win[0], win[1] + titlebar_h, win[2], win[1] + titlebar_h + radius),
@@ -104,7 +115,7 @@ def build(theme_name):
     d.line((win[0], win[1] + titlebar_h, win[2], win[1] + titlebar_h),
            fill=hex_rgb(t["hairline"]), width=max(1, S))
 
-    # ---- traffic lights ----
+    # traffic lights
     cy = win[1] + titlebar_h // 2
     dot_r = 8 * S
     dx = win[0] + 34 * S
@@ -112,7 +123,7 @@ def build(theme_name):
         d.ellipse((dx - dot_r, cy - dot_r, dx + dot_r, cy + dot_r), fill=hex_rgb(col))
         dx += 30 * S
 
-    # ---- title (centered) ----
+    # centered title
     tf = font(14)
     title = "vedanth@github \u2014 zsh"
     tw = d.textlength(title, font=tf)
@@ -120,10 +131,10 @@ def build(theme_name):
     d.text(((W - tw) / 2, cy - (tb[3] - tb[1]) / 2 - tb[1]),
            title, font=tf, fill=hex_rgb(t["title"]))
 
-    # ---- terminal session ----
-    pf = font(17)          # prompt / command lines
-    of = font(16)          # command output
-    nf = font(40)          # the name (hero)
+    # terminal session
+    pf = font(17)
+    of = font(16)
+    nf = font(40)
     cx0 = win[0] + 48 * S
     y = win[1] + titlebar_h + 30 * S
 
@@ -133,16 +144,13 @@ def build(theme_name):
                 ("  ", t["muted"])]
         return base + cmd_segs
 
-    # line 1: whoami --name
     draw_segs(d, cx0, y, prompt([("whoami", t["mauve"]), (" --name", t["yellow"])]), pf)
     y += 21 * S
 
-    # hero: the name as command output (faux-bold via stroke)
     d.text((cx0, y), "VEDANTH  M  S", font=nf, fill=hex_rgb(t["name"]),
            stroke_width=max(1, S // 2), stroke_fill=hex_rgb(t["name"]))
     y += 46 * S
 
-    # line 2: cat role.txt
     draw_segs(d, cx0, y, prompt([("cat", t["mauve"]), (" role.txt", t["blue"])]), pf)
     y += 19 * S
     draw_segs(d, cx0, y, [("Backend & ", t["muted"]),
@@ -150,16 +158,58 @@ def build(theme_name):
                           (" Software Engineer", t["muted"])], of)
     y += 22 * S
 
-    # line 3: prompt + blinking cursor block
+    # last line: prompt prefix + typed tagline + blinking cursor
     endx = draw_segs(d, cx0, y, prompt([]), pf)
-    cb = pf.getbbox("M")
-    d.rectangle((endx, y + cb[1], endx + 11 * S, y + cb[3]), fill=hex_rgb(t["peach"]))
+    if typed_text:
+        d.text((endx, y), typed_text, font=pf, fill=hex_rgb(t["text"]))
+        endx += d.textlength(typed_text, font=pf)
+    if cursor_on:
+        cb = pf.getbbox("M")
+        d.rectangle((endx + 2 * S, y + cb[1], endx + 13 * S, y + cb[3]),
+                    fill=hex_rgb(t["peach"]))
+    return img
 
+
+def build_static(theme_name):
+    t = THEMES[theme_name]
+    img = compose(t, MESSAGES[0], True)
     path = os.path.join(OUT, f"banner-{theme_name}.png")
     img.convert("RGB").save(path, "PNG")
     print("wrote", path, img.size)
 
 
+def build_gif(theme_name):
+    t = THEMES[theme_name]
+    step = 3            # chars revealed per typing frame
+    type_ms = 60        # per typing frame
+    blink_ms = 430      # per blink frame while holding
+    holds = 4           # blink cycles held after a line finishes
+    small = (W // S, H // S)
+
+    frames, durs = [], []
+    for msg in MESSAGES:
+        for k in range(0, len(msg) + 1, step):
+            frames.append(compose(t, msg[:k], True))
+            durs.append(type_ms)
+        for b in range(holds * 2):
+            frames.append(compose(t, msg, b % 2 == 0))
+            durs.append(blink_ms)
+
+    # downscale to 1x (crisp) and quantize to one shared palette. disposal=1
+    # keeps prior pixels so Pillow's optimizer stores only the changed strip
+    # (the typing line), which is what keeps the GIF small.
+    rgb = [f.convert("RGB").resize(small, Image.LANCZOS) for f in frames]
+    pal = rgb[0].convert("P", palette=Image.ADAPTIVE, colors=160)
+    pframes = [f.quantize(palette=pal, dither=Image.NONE) for f in rgb]
+
+    path = os.path.join(OUT, f"banner-{theme_name}.gif")
+    pframes[0].save(path, save_all=True, append_images=pframes[1:],
+                    duration=durs, loop=0, optimize=True, disposal=1)
+    kb = os.path.getsize(path) // 1024
+    print("wrote", path, small, f"{len(pframes)} frames", f"{kb} KB")
+
+
 if __name__ == "__main__":
-    build("dark")
-    build("light")
+    for name in ("dark", "light"):
+        build_static(name)
+        build_gif(name)

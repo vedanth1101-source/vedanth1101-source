@@ -8,26 +8,22 @@ OWN-WORLD: Catppuccin Mocha (bg #11111b, base #1e1e2e) with a peach #fab387
 STORY: Visitor reads a backend/AI engineer driving a terminal — lands on the
   name, scans role, work, stack, activity like `ls`/`cat`/`git log` output.
 FIRST VIEWPORT: terminal-window banner — `whoami --name` → VEDANTH M S large,
-  `cat role.txt` → role, blinking peach cursor. Then typing line + entry links.
+  `cat role.txt` → role, then the last prompt line TYPES rotating taglines
+  (animated GIF) with a blinking peach cursor. Then entry links + badges.
 FORM: user-pinned Terminal/TUI (chosen from three concepts). Banner rendered
-  deterministically by assets/banner-src/gen_banner.py (Pillow), not a screenshot.
+  deterministically by assets/banner-src/gen_banner.py (Pillow), not a screenshot;
+  animated GIF for the typing loop, static PNG as the <picture> fallback.
 -->
 
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/banner-dark.png">
-  <source media="(prefers-color-scheme: light)" srcset="./assets/banner-light.png">
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/banner-dark.gif">
+  <source media="(prefers-color-scheme: light)" srcset="./assets/banner-light.gif">
   <img alt="Vedanth M S — Backend & AI-Integrated Software Engineer" src="./assets/banner-dark.png" width="100%">
 </picture>
 
 <br><br>
-
-<a href="https://git.io/typing-svg">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=21&pause=1200&color=FAB387&center=true&vCenter=true&width=650&lines=Backend+%26+AI-Integrated+Software+Engineer;Rule+engines+%C2%B7+developer+tooling+%C2%B7+agentic+systems;Systems+that+make+decisions+in+single-digit+ms;Final-year+CS+%40+SSN+College+of+Engineering" alt="Typing SVG" />
-</a>
-
-<br>
 
 **[⟶ &nbsp;Step into the interactive 3D portfolio](https://vedanth1101-source.github.io/vedanth-portfolio/)**
 
