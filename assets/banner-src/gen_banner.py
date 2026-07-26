@@ -15,15 +15,15 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 OUT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # -> assets/
 S = 2  # supersample / retina scale
-W, H = 1200 * S, 200 * S  # 6:1 wide strip
+W, H = 1200 * S, 493 * S  # ~2.43:1 → renders ~652x268 at full README width
 
 FONTS = "C:/Windows/Fonts/"
 MONO_F = "CascadiaCode.ttf"
 
 # Taglines typed on the last prompt line (rotating). Kept truthful.
 MESSAGES = [
-    "Backend & AI-Integrated Software Engineer",
     "rule engines · developer tooling · agentic systems",
+    "decisions in single-digit milliseconds",
     "final-year CS @ SSN College of Engineering",
 ]
 
@@ -91,10 +91,10 @@ def compose(t, typed_text, cursor_on):
     cursor block trails it when `cursor_on`."""
     img = desktop(t)
 
-    mx, my = 16 * S, 11 * S
+    mx, my = 18 * S, 15 * S
     win = (mx, my, W - mx, H - my)
-    radius = 18 * S
-    titlebar_h = 42 * S
+    radius = 22 * S
+    titlebar_h = 56 * S
 
     # drop shadow (offset + blur, never a flat halo)
     shadow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
@@ -132,10 +132,11 @@ def compose(t, typed_text, cursor_on):
            title, font=tf, fill=hex_rgb(t["title"]))
 
     # terminal session
-    pf = font(17)
-    nf = font(42)
-    cx0 = win[0] + 40 * S
-    y = win[1] + titlebar_h + 18 * S
+    pf = font(20)
+    of = font(19)
+    nf = font(54)
+    cx0 = win[0] + 48 * S
+    y = win[1] + titlebar_h + 96 * S
 
     def prompt(cmd_segs):
         base = [("vedanth@portfolio", t["green"]), (" ", t["muted"]),
@@ -144,11 +145,18 @@ def compose(t, typed_text, cursor_on):
         return base + cmd_segs
 
     draw_segs(d, cx0, y, prompt([("whoami", t["mauve"]), (" --name", t["yellow"])]), pf)
-    y += 30 * S
+    y += 32 * S
 
     d.text((cx0, y), "VEDANTH  M  S", font=nf, fill=hex_rgb(t["name"]),
            stroke_width=max(1, S // 2), stroke_fill=hex_rgb(t["name"]))
-    y += 56 * S
+    y += 76 * S
+
+    draw_segs(d, cx0, y, prompt([("cat", t["mauve"]), (" role.txt", t["blue"])]), pf)
+    y += 26 * S
+    draw_segs(d, cx0, y, [("Backend & ", t["muted"]),
+                          ("AI-Integrated", t["peach"]),
+                          (" Software Engineer", t["muted"])], of)
+    y += 34 * S
 
     # last line: prompt prefix + typed tagline + blinking cursor
     endx = draw_segs(d, cx0, y, prompt([]), pf)
