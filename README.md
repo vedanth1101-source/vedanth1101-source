@@ -1,7 +1,7 @@
 <!--
-DIRECTION CONTRACT — Terminal/TUI
+DIRECTION CONTRACT — Terminal/TUI (centered layout)
 THESIS: The profile IS a zsh session. It refuses the badge-wall + hero-card
-  profile template; every section is a command and its output.
+  template; every section is a command. Centered + contained top to bottom.
 OWN-WORLD: Catppuccin Mocha (bg #11111b, base #1e1e2e) with a peach #fab387
   signature; mono is the native medium (real commands), not a costume.
   Header is a rendered terminal window (traffic lights, syntax coloring).
@@ -46,11 +46,13 @@ FORM: user-pinned Terminal/TUI (chosen from three concepts). Banner rendered
 
 ---
 
-## $ whoami
+<div align="center">
 
-<img align="right" width="330" src="https://user-images.githubusercontent.com/74038190/212750672-2f3f2b50-c84f-4ed8-a60a-849ae69ff9df.gif" />
+### $ whoami
 
 I'm a final-year Computer Science student and Software Engineering intern who builds **backend systems and AI-integrated applications** — rule engines, developer tooling, and agentic platforms. I care about correctness under concurrency, honest abstractions, and shipping things end to end rather than to a demo.
+
+</div>
 
 ```text
 vedanth@portfolio ~ % cat about.txt
@@ -63,23 +65,33 @@ vedanth@portfolio ~ % cat about.txt
   langs     English · Tamil · Kannada
 ```
 
-<br clear="right"/>
+<div align="center">
 
-## $ ls ~/work
+### $ ls ~/work
 
 **[sentinelx/](https://github.com/vedanth1101-source/sentinelx)** &nbsp;·&nbsp; `configurable policy decision engine`
+
 Moves business rules out of code and into a database, then evaluates transactions against an in-memory rule set in **single-digit milliseconds** — no database read on the hot path. A lock-free `volatile` cache with synchronized write-through invalidation, strictest-wins severity escalation, and an adversarial stress-test endpoint that measures per-rule coverage. **34 tests.**
-<br><sub>`Java 21` · `Spring Boot` · `React` · `TypeScript` · `MySQL`</sub>
+
+<sub>`Java 21` · `Spring Boot` · `React` · `TypeScript` · `MySQL`</sub>
 
 **[BugBuddy/](https://github.com/vedanth1101-source/BugBuddy)** &nbsp;·&nbsp; `AI developer diagnostics`
+
 Turns a raw stack trace into a plain-English diagnosis and a suggested fix with Gemini, keeping a MySQL cache in front so a repeated error never pays for the model twice. Per-IP rate limiting and optional API-key auth guard the one endpoint that spends quota.
-<br><sub>`Java 21` · `Spring Boot` · `React 19` · `Gemini` · `Railway` · `Vercel`</sub>
+
+<sub>`Java 21` · `Spring Boot` · `React 19` · `Gemini` · `Railway` · `Vercel`</sub>
 
 **[farm-manager-ai/](https://github.com/vedanth1101-source/farm-manager-ai-poc)** &nbsp;·&nbsp; `local-first agentic platform`
-Translates plain-English questions into SQL over a local Ollama model, with a deterministic regex fallback for zero-downtime querying, a RAG knowledge base, and autonomous background agents.
-<br><sub>`Java` · `Spring Boot` · `SQLite` · `Ollama` · `RAG`</sub>
 
-## $ cat stack.txt
+Translates plain-English questions into SQL over a local Ollama model, with a deterministic regex fallback for zero-downtime querying, a RAG knowledge base, and autonomous background agents.
+
+<sub>`Java` · `Spring Boot` · `SQLite` · `Ollama` · `RAG`</sub>
+
+</div>
+
+<div align="center">
+
+### $ cat stack.txt
 
 **Languages** &nbsp;
 <img src="https://skillicons.dev/icons?i=java,python,ts,js,c&theme=dark" height="38" />
@@ -97,9 +109,11 @@ Translates plain-English questions into SQL over a local Ollama model, with a de
 <img src="https://skillicons.dev/icons?i=git,vscode,postman&theme=dark" height="38" />
 &nbsp;·&nbsp; `Gemini API` &nbsp; `Ollama` &nbsp; `RAG`
 
-## $ git log --stat
+</div>
 
 <div align="center">
+
+### $ git log --stat
 
 <img height="165" src="https://github-readme-stats.vercel.app/api?username=vedanth1101-source&show_icons=true&count_private=true&include_all_commits=true&hide_border=true&title_color=fab387&icon_color=89b4fa&text_color=cdd6f4&bg_color=1e1e2e" alt="GitHub stats" />
 <img height="165" src="https://github-readme-stats.vercel.app/api/top-langs/?username=vedanth1101-source&layout=compact&langs_count=8&hide_border=true&title_color=fab387&text_color=cdd6f4&bg_color=1e1e2e" alt="Top languages" />
@@ -110,9 +124,9 @@ Translates plain-English questions into SQL over a local Ollama model, with a de
 
 </div>
 
-## $ ./snake
-
 <div align="center">
+
+### $ ./snake
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/vedanth1101-source/vedanth1101-source/output/github-snake-dark.svg">
