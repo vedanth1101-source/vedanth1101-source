@@ -100,7 +100,7 @@ Translates plain-English questions into SQL over a local Ollama model, with a de
 
 <div align="center">
 
-<img height="175" src="https://streak-stats.demolab.com?user=vedanth1101-source&hide_border=true&background=1e1e2e&stroke=313244&ring=fab387&fire=f38ba8&currStreakLabel=fab387&sideLabels=a6adc8&dates=6c7086&currStreakNum=cdd6f4&sideNums=cdd6f4" alt="Contribution streak" />
+<img width="850" src="https://streak-stats.demolab.com?user=vedanth1101-source&hide_border=true&background=1e1e2e&stroke=313244&ring=fab387&fire=f38ba8&currStreakLabel=fab387&sideLabels=a6adc8&dates=6c7086&currStreakNum=cdd6f4&sideNums=cdd6f4" alt="Contribution streak" />
 
 <img width="850" src="https://github-readme-activity-graph.vercel.app/graph?username=vedanth1101-source&hide_border=true&bg_color=1e1e2e&color=cdd6f4&line=fab387&point=89b4fa&area=true&area_color=fab387&title_color=fab387" alt="Contribution activity graph" />
 
