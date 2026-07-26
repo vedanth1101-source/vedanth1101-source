@@ -73,31 +73,36 @@ Turns a raw stack trace into a plain-English diagnosis and a suggested fix with 
 Translates plain-English questions into SQL over a local Ollama model, with a deterministic regex fallback for zero-downtime querying, a RAG knowledge base, and autonomous background agents.<br>
 <sub>`Java` · `Spring Boot` · `SQLite` · `Ollama` · `RAG`</sub>
 
-<div align="center">
+---
 
 ### $ cat stack.txt
 
-**Languages** &nbsp;
-<img src="https://skillicons.dev/icons?i=java,python,ts,js,c&theme=dark" height="38" />
+<div align="center">
 
-**Backend** &nbsp;
-<img src="https://skillicons.dev/icons?i=spring,nodejs&theme=dark" height="38" />
+**Languages**<br>
+<img src="https://skillicons.dev/icons?i=java,python,ts,js,c&theme=dark" height="40" />
 
-**Frontend** &nbsp;
-<img src="https://skillicons.dev/icons?i=react,vite,tailwind,html,css&theme=dark" height="38" />
+**Backend**<br>
+<img src="https://skillicons.dev/icons?i=spring,nodejs&theme=dark" height="40" />
 
-**Data &amp; Infra** &nbsp;
-<img src="https://skillicons.dev/icons?i=mysql,sqlite,docker,vercel&theme=dark" height="38" />
+**Frontend**<br>
+<img src="https://skillicons.dev/icons?i=react,vite,tailwind,html,css&theme=dark" height="40" />
 
-**AI &amp; Tooling** &nbsp;
-<img src="https://skillicons.dev/icons?i=git,vscode,postman&theme=dark" height="38" />
-&nbsp;·&nbsp; `Gemini API` &nbsp; `Ollama` &nbsp; `RAG`
+**Data &amp; Infra**<br>
+<img src="https://skillicons.dev/icons?i=mysql,sqlite,docker,vercel&theme=dark" height="40" />
+
+**AI &amp; Tooling**<br>
+<img src="https://skillicons.dev/icons?i=git,vscode,postman&theme=dark" height="40" />
+
+`Gemini API` &nbsp;·&nbsp; `Ollama` &nbsp;·&nbsp; `RAG`
 
 </div>
 
-<div align="center">
+---
 
 ### $ git log --stat
+
+<div align="center">
 
 <img height="165" src="https://github-readme-stats.vercel.app/api?username=vedanth1101-source&show_icons=true&count_private=true&include_all_commits=true&hide_border=true&title_color=fab387&icon_color=89b4fa&text_color=cdd6f4&bg_color=1e1e2e" alt="GitHub stats" />
 <img height="165" src="https://github-readme-stats.vercel.app/api/top-langs/?username=vedanth1101-source&layout=compact&langs_count=8&hide_border=true&title_color=fab387&text_color=cdd6f4&bg_color=1e1e2e" alt="Top languages" />
@@ -108,9 +113,11 @@ Translates plain-English questions into SQL over a local Ollama model, with a de
 
 </div>
 
-<div align="center">
+---
 
 ### $ ./snake
+
+<div align="center">
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/vedanth1101-source/vedanth1101-source/output/github-snake-dark.svg">
