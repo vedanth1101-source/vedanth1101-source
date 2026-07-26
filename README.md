@@ -100,12 +100,9 @@ Translates plain-English questions into SQL over a local Ollama model, with a de
 
 <div align="center">
 
-<img height="165" src="https://github-readme-stats.vercel.app/api?username=vedanth1101-source&show_icons=true&count_private=true&include_all_commits=true&hide_border=true&title_color=fab387&icon_color=89b4fa&text_color=cdd6f4&bg_color=1e1e2e" alt="GitHub stats" />
-<img height="165" src="https://github-readme-stats.vercel.app/api/top-langs/?username=vedanth1101-source&layout=compact&langs_count=8&hide_border=true&title_color=fab387&text_color=cdd6f4&bg_color=1e1e2e" alt="Top languages" />
+<img height="175" src="https://streak-stats.demolab.com?user=vedanth1101-source&hide_border=true&background=1e1e2e&stroke=313244&ring=fab387&fire=f38ba8&currStreakLabel=fab387&sideLabels=a6adc8&dates=6c7086&currStreakNum=cdd6f4&sideNums=cdd6f4" alt="Contribution streak" />
 
-<img height="165" src="https://streak-stats.demolab.com?user=vedanth1101-source&hide_border=true&background=1e1e2e&stroke=313244&ring=fab387&fire=f38ba8&currStreakLabel=fab387&sideLabels=a6adc8&dates=6c7086&currStreakNum=cdd6f4&sideNums=cdd6f4" alt="Streak" />
-
-<img width="820" src="https://github-readme-activity-graph.vercel.app/graph?username=vedanth1101-source&hide_border=true&bg_color=1e1e2e&color=cdd6f4&line=fab387&point=89b4fa&area=true&area_color=fab387&title_color=fab387" alt="Activity graph" />
+<img width="850" src="https://github-readme-activity-graph.vercel.app/graph?username=vedanth1101-source&hide_border=true&bg_color=1e1e2e&color=cdd6f4&line=fab387&point=89b4fa&area=true&area_color=fab387&title_color=fab387" alt="Contribution activity graph" />
 
 </div>
 
