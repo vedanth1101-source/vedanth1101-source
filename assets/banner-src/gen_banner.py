@@ -132,11 +132,11 @@ def compose(t, typed_text, cursor_on):
            title, font=tf, fill=hex_rgb(t["title"]))
 
     # terminal session
-    pf = font(20)
-    of = font(19)
-    nf = font(54)
+    pf = font(23)
+    of = font(22)
+    nf = font(100)
     cx0 = win[0] + 48 * S
-    y = win[1] + titlebar_h + 96 * S
+    y = win[1] + titlebar_h + 84 * S
 
     def prompt(cmd_segs):
         base = [("vedanth@portfolio", t["green"]), (" ", t["muted"]),
@@ -145,14 +145,14 @@ def compose(t, typed_text, cursor_on):
         return base + cmd_segs
 
     draw_segs(d, cx0, y, prompt([("whoami", t["mauve"]), (" --name", t["yellow"])]), pf)
-    y += 32 * S
+    y += 33 * S
 
     d.text((cx0, y), "VEDANTH  M  S", font=nf, fill=hex_rgb(t["name"]),
            stroke_width=max(1, S // 2), stroke_fill=hex_rgb(t["name"]))
-    y += 76 * S
+    y += 122 * S
 
     draw_segs(d, cx0, y, prompt([("cat", t["mauve"]), (" role.txt", t["blue"])]), pf)
-    y += 26 * S
+    y += 27 * S
     draw_segs(d, cx0, y, [("Backend & ", t["muted"]),
                           ("AI-Integrated", t["peach"]),
                           (" Software Engineer", t["muted"])], of)
