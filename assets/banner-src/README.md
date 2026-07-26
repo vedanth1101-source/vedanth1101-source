@@ -2,8 +2,8 @@
 
 The profile banner is generated deterministically with Pillow (PIL) — not a browser screenshot.
 
-- `gen_banner.py` — per theme, renders a static `../banner-<theme>.png` (2400×640, 2× supersampled)
-  and an animated `../banner-<theme>.gif` (1200×320) whose last prompt line types out rotating
+- `gen_banner.py` — per theme, renders a static `../banner-<theme>.png` (2400×800, 2× supersampled)
+  and an animated `../banner-<theme>.gif` (1200×400) whose last prompt line types out rotating
   taglines (`MESSAGES` in the script) with a blinking cursor. Concept: a terminal window (Catppuccin
   Mocha dark / Latte light) with traffic lights, a live zsh session, and syntax coloring. Signature
   peach `#fab387`; all type is Cascadia Code (mono). The GIF stays ~100 KB via `disposal=1`.
