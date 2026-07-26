@@ -59,29 +59,19 @@ vedanth@portfolio ~ % cat about.txt
 
 ---
 
-<div align="center">
-
 ### $ ls ~/work
 
-**[sentinelx/](https://github.com/vedanth1101-source/sentinelx)** &nbsp;·&nbsp; `configurable policy decision engine`
-
-Moves business rules out of code and into a database, then evaluates transactions against an in-memory rule set in **single-digit milliseconds** — no database read on the hot path. A lock-free `volatile` cache with synchronized write-through invalidation, strictest-wins severity escalation, and an adversarial stress-test endpoint that measures per-rule coverage. **34 tests.**
-
+**[sentinelx/](https://github.com/vedanth1101-source/sentinelx)** &nbsp;·&nbsp; `configurable policy decision engine`<br>
+Moves business rules out of code and into a database, then evaluates transactions against an in-memory rule set in **single-digit milliseconds** — no database read on the hot path. A lock-free `volatile` cache with synchronized write-through invalidation, strictest-wins severity escalation, and an adversarial stress-test endpoint that measures per-rule coverage. **34 tests.**<br>
 <sub>`Java 21` · `Spring Boot` · `React` · `TypeScript` · `MySQL`</sub>
 
-**[BugBuddy/](https://github.com/vedanth1101-source/BugBuddy)** &nbsp;·&nbsp; `AI developer diagnostics`
-
-Turns a raw stack trace into a plain-English diagnosis and a suggested fix with Gemini, keeping a MySQL cache in front so a repeated error never pays for the model twice. Per-IP rate limiting and optional API-key auth guard the one endpoint that spends quota.
-
+**[BugBuddy/](https://github.com/vedanth1101-source/BugBuddy)** &nbsp;·&nbsp; `AI developer diagnostics`<br>
+Turns a raw stack trace into a plain-English diagnosis and a suggested fix with Gemini, keeping a MySQL cache in front so a repeated error never pays for the model twice. Per-IP rate limiting and optional API-key auth guard the one endpoint that spends quota.<br>
 <sub>`Java 21` · `Spring Boot` · `React 19` · `Gemini` · `Railway` · `Vercel`</sub>
 
-**[farm-manager-ai/](https://github.com/vedanth1101-source/farm-manager-ai-poc)** &nbsp;·&nbsp; `local-first agentic platform`
-
-Translates plain-English questions into SQL over a local Ollama model, with a deterministic regex fallback for zero-downtime querying, a RAG knowledge base, and autonomous background agents.
-
+**[farm-manager-ai/](https://github.com/vedanth1101-source/farm-manager-ai-poc)** &nbsp;·&nbsp; `local-first agentic platform`<br>
+Translates plain-English questions into SQL over a local Ollama model, with a deterministic regex fallback for zero-downtime querying, a RAG knowledge base, and autonomous background agents.<br>
 <sub>`Java` · `Spring Boot` · `SQLite` · `Ollama` · `RAG`</sub>
-
-</div>
 
 <div align="center">
 
