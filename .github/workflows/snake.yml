@@ -14,6 +14,9 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Generate snake SVGs
         uses: Platane/snk@v3
         id: snake-gif
@@ -23,10 +26,16 @@ jobs:
             dist/github-snake.svg?color_snake=fe640b&color_dots=e6e9ef,f6d9bf,f2b98a,ec8f4e,fe640b
             dist/github-snake-dark.svg?color_snake=fab387&color_dots=1e1e2e,4a3a2e,8a6244,c98a5a,fab387
 
-      - name: Push to output branch
-        uses: crazy-max/ghaction-github-pages@v4
-        with:
-          target_branch: output
-          build_dir: dist
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Repo is private, so raw.githubusercontent.com/<user>/<repo>/output/... is not
+      # publicly fetchable and GitHub's image proxy 404s it. Instead commit the SVGs
+      # onto main under assets/ and reference them by relative path (like the banner).
+      # [skip ci] keeps this commit from retriggering the workflow.
+      - name: Commit snake to assets on main
+        run: |
+          mkdir -p assets
+          cp dist/github-snake.svg dist/github-snake-dark.svg assets/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/github-snake.svg assets/github-snake-dark.svg
+          git diff --quiet --cached || git commit -m "chore: refresh contribution snake [skip ci]"
+          git push

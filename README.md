@@ -113,9 +113,9 @@ Translates plain-English questions into SQL over a local Ollama model, with a de
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/vedanth1101-source/vedanth1101-source/output/github-snake-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/vedanth1101-source/vedanth1101-source/output/github-snake.svg">
-  <img alt="snake eating my contribution graph" src="https://raw.githubusercontent.com/vedanth1101-source/vedanth1101-source/output/github-snake-dark.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/github-snake-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./assets/github-snake.svg">
+  <img alt="snake eating my contribution graph" src="./assets/github-snake-dark.svg">
 </picture>
 
 </div>
