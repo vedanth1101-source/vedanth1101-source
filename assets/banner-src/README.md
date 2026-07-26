@@ -3,8 +3,10 @@
 The profile banner is generated deterministically with Pillow (PIL) — not a browser screenshot.
 
 - `gen_banner.py` — renders `../banner-dark.png` and `../banner-light.png` at 2400×600 (2× supersampled).
-  Palette: teal `#0d9488` / cyan `#22d3ee` / `#2dd4bf`; name in Segoe UI Semibold; terminal line in Cascadia Code.
-- `dark.html` / `light.html` — the original HTML mockups the PIL script was derived from (reference only).
+  Concept: a terminal window (Catppuccin Mocha dark / Latte light) with traffic lights, a live zsh
+  session, and syntax coloring. Signature peach `#fab387`; all type is Cascadia Code (mono).
+- `dark.html` / `light.html` — **stale**: HTML mockups of the previous teal/CRT design, kept for
+  reference only. They do not match the current terminal concept and do not feed the build.
 
 ## Regenerate
 
@@ -13,6 +15,6 @@ pip install pillow numpy
 python gen_banner.py
 ```
 
-Fonts used (Windows): `seguisb.ttf` (Segoe UI Semibold), `segoeui.ttf`, `CascadiaCode.ttf`.
-Outputs overwrite the PNGs one directory up, which the profile `README.md` references via a
-theme-aware `<picture>` block.
+Font used (Windows): `CascadiaCode.ttf`.
+Outputs overwrite the PNGs one directory up (`../banner-*.png`), which the profile `README.md`
+references via a theme-aware `<picture>` block.

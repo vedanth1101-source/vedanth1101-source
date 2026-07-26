@@ -1,20 +1,23 @@
-"""Render the profile banner (dark + light) as high-res PNGs with PIL."""
-import os
-import numpy as np
-from PIL import Image, ImageDraw, ImageFont
+"""Render the profile banner (dark + light) as high-res PNGs with PIL.
 
-OUT = os.path.dirname(os.path.abspath(__file__))
+Concept: a real terminal window (Catppuccin Mocha / Latte), not mono-as-costume.
+Title bar with traffic lights, a live zsh session with syntax-accurate coloring,
+the name as the large output of `whoami --name`, and a blinking cursor block.
+Deterministic — NOT a browser screenshot. Output is 2400x600 (2x supersampled).
+"""
+import os
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
+
+OUT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # -> assets/
 S = 2  # supersample / retina scale
 W, H = 1200 * S, 300 * S
 
 FONTS = "C:/Windows/Fonts/"
-def font(name, px):
-    return ImageFont.truetype(FONTS + name, px * S)
-
-NAME_F = "seguisb.ttf"      # Segoe UI Semibold
-TAG_F  = "segoeui.ttf"      # Segoe UI
-TAGB_F = "seguisb.ttf"
 MONO_F = "CascadiaCode.ttf"
+
+
+def font(px):
+    return ImageFont.truetype(FONTS + MONO_F, px * S)
 
 
 def hex_rgb(h):
@@ -22,135 +25,135 @@ def hex_rgb(h):
     return tuple(int(h[i:i + 2], 16) for i in (0, 2, 4))
 
 
+# Catppuccin Mocha (dark) / Latte (light). One palette, two renditions.
 THEMES = {
     "dark": {
-        "top": "#0d1117", "bot": "#010409",
-        "glows": [("#22d3ee", 0.16, 0.88, -0.20, 1.15),
-                  ("#0d9488", 0.14, 1.02, 1.15, 0.95)],
-        "scan": (255, 255, 255, 6),
-        "name": "#f0f6fc", "eyebrow": "#2dd4bf", "dot": "#2dd4bf",
-        "tag_strong": "#cdd9e5", "tag_mid": "#9aa5b1", "tag_accent": "#2dd4bf",
-        "term": "#6e7d8f", "prompt": "#2dd4bf", "cursor": "#2dd4bf",
-        "rule": ("#0d9488", "#22d3ee"), "accent_bar": ("#0d9488", "#22d3ee"),
+        "desk_top": "#0c0c14", "desk_bot": "#08080e",
+        "window": "#1e1e2e", "titlebar": "#181825", "hairline": "#313244",
+        "dot_r": "#f38ba8", "dot_y": "#f9e2af", "dot_g": "#a6e3a1",
+        "title": "#7f849c",
+        "text": "#cdd6f4", "muted": "#a6adc8", "dim": "#6c7086",
+        "green": "#a6e3a1", "blue": "#89b4fa", "peach": "#fab387",
+        "mauve": "#cba6f7", "yellow": "#f9e2af",
+        "name": "#cdd6f4",
+        "shadow": (0, 0, 0, 150),
     },
     "light": {
-        "top": "#ffffff", "bot": "#f2f5f9",
-        "glows": [("#0d9488", 0.10, 0.88, -0.20, 1.15),
-                  ("#0891b2", 0.10, 1.02, 1.15, 0.95)],
-        "scan": (0, 0, 0, 4),
-        "name": "#0b1220", "eyebrow": "#0f766e", "dot": "#0d9488",
-        "tag_strong": "#1f2937", "tag_mid": "#55627a", "tag_accent": "#0f766e",
-        "term": "#6b7688", "prompt": "#0f766e", "cursor": "#0d9488",
-        "rule": ("#0d9488", "#0891b2"), "accent_bar": ("#0d9488", "#0891b2"),
+        "desk_top": "#dce0e8", "desk_bot": "#c9cdda",
+        "window": "#eff1f5", "titlebar": "#e6e9ef", "hairline": "#bcc0cc",
+        "dot_r": "#d20f39", "dot_y": "#df8e1d", "dot_g": "#40a02b",
+        "title": "#8c8fa1",
+        "text": "#4c4f69", "muted": "#6c6f85", "dim": "#9ca0b0",
+        "green": "#40a02b", "blue": "#1e66f5", "peach": "#fe640b",
+        "mauve": "#8839ef", "yellow": "#df8e1d",
+        "name": "#4c4f69",
+        "shadow": (60, 66, 97, 70),
     },
 }
 
 
-def background(t):
-    top = np.array(hex_rgb(t["top"]), float)
-    bot = np.array(hex_rgb(t["bot"]), float)
-    ramp = np.linspace(0, 1, H)[:, None]
-    base = (top[None, :] * (1 - ramp) + bot[None, :] * ramp)
-    img = np.repeat(base[:, None, :], W, axis=1)
-
-    yy, xx = np.mgrid[0:H, 0:W]
-    for hexc, alpha, cx, cy, radius in t["glows"]:
-        c = np.array(hex_rgb(hexc), float)
-        d = np.sqrt(((xx - cx * W) / (radius * W)) ** 2 +
-                    ((yy - cy * H) / (radius * W)) ** 2)
-        g = np.clip(1 - d, 0, 1) ** 2 * alpha
-        img = img * (1 - g[:, :, None]) + c[None, None, :] * g[:, :, None]
-
-    return Image.fromarray(np.clip(img, 0, 255).astype("uint8"), "RGB").convert("RGBA")
+def desktop(t):
+    """Vertical gradient backdrop the terminal window floats on."""
+    top = hex_rgb(t["desk_top"])
+    bot = hex_rgb(t["desk_bot"])
+    img = Image.new("RGB", (W, H))
+    px = img.load()
+    for y in range(H):
+        f = y / (H - 1)
+        px_row = tuple(round(top[i] * (1 - f) + bot[i] * f) for i in range(3))
+        for x in range(W):
+            px[x, y] = px_row
+    return img.convert("RGBA")
 
 
-def hgrad_bar(w, h, c0, c1):
-    a = np.array(hex_rgb(c0), float)
-    b = np.array(hex_rgb(c1), float)
-    ramp = np.linspace(0, 1, w)[:, None]
-    row = (a[None, :] * (1 - ramp) + b[None, :] * ramp)
-    arr = np.repeat(row[None, :, :], h, axis=0)
-    return Image.fromarray(arr.astype("uint8"), "RGB")
-
-
-def draw_tracked(draw, xy, text, fnt, fill, tracking):
-    x, y = xy
-    for ch in text:
-        draw.text((x, y), ch, font=fnt, fill=fill)
-        x += draw.textlength(ch, font=fnt) + tracking * S
+def draw_segs(d, x, y, segs, fnt):
+    """Draw a run of (text, hexcolor) segments in mono; return the end x."""
+    for text, col in segs:
+        d.text((x, y), text, font=fnt, fill=hex_rgb(col))
+        x += d.textlength(text, font=fnt)
     return x
 
 
 def build(theme_name):
     t = THEMES[theme_name]
-    img = background(t)
+    img = desktop(t)
+
+    # ---- window geometry ----
+    mx, my = 34 * S, 26 * S
+    win = (mx, my, W - mx, H - my)
+    radius = 24 * S
+    titlebar_h = 66 * S
+
+    # ---- drop shadow (offset + blur, never a flat halo) ----
+    shadow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    sd = ImageDraw.Draw(shadow)
+    off = 10 * S
+    sd.rounded_rectangle((win[0], win[1] + off, win[2], win[3] + off),
+                         radius=radius, fill=t["shadow"])
+    shadow = shadow.filter(ImageFilter.GaussianBlur(22 * S))
+    img.alpha_composite(shadow)
+
+    # ---- window body + title bar ----
     d = ImageDraw.Draw(img)
+    d.rounded_rectangle(win, radius=radius, fill=hex_rgb(t["window"]))
+    # title bar: rounded top, squared bottom (clip via a second fill)
+    d.rounded_rectangle((win[0], win[1], win[2], win[1] + titlebar_h + radius),
+                        radius=radius, fill=hex_rgb(t["titlebar"]))
+    d.rectangle((win[0], win[1] + titlebar_h, win[2], win[1] + titlebar_h + radius),
+                fill=hex_rgb(t["window"]))
+    d.line((win[0], win[1] + titlebar_h, win[2], win[1] + titlebar_h),
+           fill=hex_rgb(t["hairline"]), width=max(1, S))
 
-    # top hairline accent, faded at the ends
-    bar = hgrad_bar(W, 4 * S, *t["accent_bar"]).convert("RGBA")
-    mask = np.zeros((4 * S, W), "uint8")
-    xr = np.linspace(0, 1, W)
-    edge = np.clip(np.minimum(xr / 0.30, (1 - xr) / 0.55), 0, 1)
-    mask[:] = (edge * 235).astype("uint8")[None, :]
-    bar.putalpha(Image.fromarray(mask, "L"))
-    img.alpha_composite(bar, (0, 0))
+    # ---- traffic lights ----
+    cy = win[1] + titlebar_h // 2
+    dot_r = 8 * S
+    dx = win[0] + 34 * S
+    for col in (t["dot_r"], t["dot_y"], t["dot_g"]):
+        d.ellipse((dx - dot_r, cy - dot_r, dx + dot_r, cy + dot_r), fill=hex_rgb(col))
+        dx += 30 * S
 
-    # scanlines
-    scan = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    sd = ImageDraw.Draw(scan)
-    for y in range(0, H, 3 * S):
-        sd.line([(0, y), (W, y)], fill=t["scan"], width=S)
-    img.alpha_composite(scan)
+    # ---- title (centered) ----
+    tf = font(14)
+    title = "vedanth@github \u2014 zsh"
+    tw = d.textlength(title, font=tf)
+    tb = tf.getbbox(title)
+    d.text(((W - tw) / 2, cy - (tb[3] - tb[1]) / 2 - tb[1]),
+           title, font=tf, fill=hex_rgb(t["title"]))
 
-    d = ImageDraw.Draw(img)
-    left = 72 * S
-    top = 60 * S
+    # ---- terminal session ----
+    pf = font(17)          # prompt / command lines
+    of = font(16)          # command output
+    nf = font(40)          # the name (hero)
+    cx0 = win[0] + 48 * S
+    y = win[1] + titlebar_h + 30 * S
 
-    # eyebrow: dot + tracked mono label
-    dot = 7 * S
-    ey_y = top
-    d.ellipse([left, ey_y + 3 * S, left + dot, ey_y + 3 * S + dot], fill=hex_rgb(t["dot"]))
-    eb_font = font(MONO_F, 14)
-    draw_tracked(d, (left + dot + 16 * S, ey_y), "SOFTWARE  ENGINEER", eb_font,
-                 hex_rgb(t["eyebrow"]), 3)
+    def prompt(cmd_segs):
+        base = [("vedanth@portfolio", t["green"]), (" ", t["muted"]),
+                ("~", t["blue"]), (" ", t["muted"]), ("%", t["peach"]),
+                ("  ", t["muted"])]
+        return base + cmd_segs
 
-    # name
-    name_font = font(NAME_F, 60)
-    name_y = ey_y + 40 * S
-    end_x = draw_tracked(d, (left, name_y), "VEDANTH   M   S", name_font,
-                         hex_rgb(t["name"]), 7)
-    nb = name_font.getbbox("VEDANTH")
-    name_h = nb[3] - nb[1]
+    # line 1: whoami --name
+    draw_segs(d, cx0, y, prompt([("whoami", t["mauve"]), (" --name", t["yellow"])]), pf)
+    y += 21 * S
 
-    # accent rule
-    rule_y = name_y + name_h + 26 * S
-    rule = hgrad_bar(108 * S, 3 * S, *t["rule"])
-    img.paste(rule, (left, rule_y))
+    # hero: the name as command output (faux-bold via stroke)
+    d.text((cx0, y), "VEDANTH  M  S", font=nf, fill=hex_rgb(t["name"]),
+           stroke_width=max(1, S // 2), stroke_fill=hex_rgb(t["name"]))
+    y += 46 * S
 
-    # tagline (mixed colours)
-    d = ImageDraw.Draw(img)
-    tag_y = rule_y + 22 * S
-    tf = font(TAG_F, 23)
-    tfb = font(TAGB_F, 23)
-    segs = [("Backend systems", tfb, t["tag_strong"]),
-            ("  &  ", tf, t["tag_mid"]),
-            ("AI-integrated", tfb, t["tag_accent"]),
-            (" applications", tf, t["tag_mid"])]
-    x = left
-    for text, fnt, col in segs:
-        d.text((x, tag_y), text, font=fnt, fill=hex_rgb(col))
-        x += d.textlength(text, font=fnt)
+    # line 2: cat role.txt
+    draw_segs(d, cx0, y, prompt([("cat", t["mauve"]), (" role.txt", t["blue"])]), pf)
+    y += 19 * S
+    draw_segs(d, cx0, y, [("Backend & ", t["muted"]),
+                          ("AI-Integrated", t["peach"]),
+                          (" Software Engineer", t["muted"])], of)
+    y += 22 * S
 
-    # terminal line + cursor
-    term_font = font(MONO_F, 15)
-    term_y = H - 62 * S
-    d.text((left, term_y), ">", font=term_font, fill=hex_rgb(t["prompt"]))
-    tx = left + d.textlength("> ", font=term_font) + 6 * S
-    msg = "building systems that make decisions in milliseconds"
-    d.text((tx, term_y), msg, font=term_font, fill=hex_rgb(t["term"]))
-    cx = tx + d.textlength(msg, font=term_font) + 8 * S
-    tb = term_font.getbbox("Ag")
-    d.rectangle([cx, term_y + tb[1], cx + 8 * S, term_y + tb[3]], fill=hex_rgb(t["cursor"]))
+    # line 3: prompt + blinking cursor block
+    endx = draw_segs(d, cx0, y, prompt([]), pf)
+    cb = pf.getbbox("M")
+    d.rectangle((endx, y + cb[1], endx + 11 * S, y + cb[3]), fill=hex_rgb(t["peach"]))
 
     path = os.path.join(OUT, f"banner-{theme_name}.png")
     img.convert("RGB").save(path, "PNG")
