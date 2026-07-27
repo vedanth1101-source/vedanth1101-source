@@ -31,6 +31,14 @@ def bake(path):
     varhex = {name: as_hex(val)
               for name, val in re.findall(r"--([a-z0-9]+)\s*:\s*([^;}]+)", sty)}
 
+    # THE FIX: resolve CSS custom properties to literal hex everywhere. GitHub
+    # applies the SVG's internal <style> but does NOT resolve var() in an <img>
+    # context, so `fill:var(--ce)` computes to its initial value (black) and
+    # overrides any inline fill. Substituting the literal makes the CSS render
+    # the intended color. Geometry (width/height:12px) stays in the <style>.
+    for _name, _hx in varhex.items():
+        svg = svg.replace(f"var(--{_name})", _hx)
+
     # .class { ... fill:var(--x) ... stroke:var(--y) ... }
     class_fill, class_stroke = {}, {}
     for cls, body in re.findall(r"\.([a-z][a-z0-9_-]*)\s*\{([^}]*)\}", sty):
