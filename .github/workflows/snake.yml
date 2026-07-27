@@ -23,8 +23,8 @@ jobs:
         with:
           github_user_name: ${{ github.repository_owner }}
           outputs: |
-            dist/github-snake.gif?color_snake=fe640b&color_dots=e6e9ef,f6d9bf,f2b98a,ec8f4e,fe640b
-            dist/github-snake-dark.gif?color_snake=fab387&color_dots=232634,4a3a2e,8a6244,c98a5a,fab387
+            dist/github-snake.svg?color_snake=fe640b&color_dots=e6e9ef,f6d9bf,f2b98a,ec8f4e,fe640b
+            dist/github-snake-dark.svg?color_snake=fab387&color_dots=313244,5e4a4a,8f6450,c07d54,fab387
 
       # Repo is private, so raw.githubusercontent.com/<user>/<repo>/output/... is not
       # publicly fetchable and GitHub's image proxy 404s it. Instead commit the SVGs
@@ -33,9 +33,9 @@ jobs:
       - name: Commit snake to assets on main
         run: |
           mkdir -p assets
-          cp dist/github-snake.gif dist/github-snake-dark.gif assets/
+          cp dist/github-snake.svg dist/github-snake-dark.svg assets/
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/github-snake.gif assets/github-snake-dark.gif
+          git add assets/github-snake.svg assets/github-snake-dark.svg
           git diff --quiet --cached || git commit -m "chore: refresh contribution snake [skip ci]"
           git push
