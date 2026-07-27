@@ -30,8 +30,9 @@ jobs:
       # publicly fetchable and GitHub's image proxy 404s it. Instead commit the SVGs
       # onto main under assets/ and reference them by relative path (like the banner).
       # [skip ci] keeps this commit from retriggering the workflow.
-      - name: Commit snake to assets on main
+      - name: Bake colors inline + commit snake to assets on main
         run: |
+          python3 scripts/bake_snake.py dist/github-snake.svg dist/github-snake-dark.svg
           mkdir -p assets
           cp dist/github-snake.svg dist/github-snake-dark.svg assets/
           git config user.name "github-actions[bot]"
