@@ -63,6 +63,9 @@ def bake(path):
         return tag[:-2] + add + "/>" if tag.endswith("/>") else tag
 
     baked = re.sub(r'<rect class="([^"]*)"[^>]*/>', repl, svg)
+    # drop snk's "eaten dots" progress bar (the wide u* rects) — meaningless in a
+    # static (non-animated) render and reads as a dark bar under the grid.
+    baked = re.sub(r'<rect class="u[^"]*"[^>]*/>', "", baked)
     open(path, "w", encoding="utf-8").write(baked)
     n = len(re.findall(r"<rect[^>]* fill=", baked))
     print(f"baked {path}: {n} rects given inline fill")

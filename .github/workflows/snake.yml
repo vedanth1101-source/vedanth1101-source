@@ -24,7 +24,7 @@ jobs:
           github_user_name: ${{ github.repository_owner }}
           outputs: |
             dist/github-snake.svg?color_snake=fe640b&color_dots=e6e9ef,f6d9bf,f2b98a,ec8f4e,fe640b
-            dist/github-snake-dark.svg?color_snake=fab387&color_dots=313244,5e4a4a,8f6450,c07d54,fab387
+            dist/github-snake-dark.svg?color_snake=fab387&color_dots=45475a,8a5e46,b87f4d,e09a58,fab387
 
       # Repo is private, so raw.githubusercontent.com/<user>/<repo>/output/... is not
       # publicly fetchable and GitHub's image proxy 404s it. Instead commit the SVGs
