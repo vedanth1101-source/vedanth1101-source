@@ -112,14 +112,14 @@ Translates plain-English questions into SQL over a local Ollama model, with a de
 
 ---
 
-### $ ./snake
+### $ ./heatmap --year
 
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/github-snake-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./assets/github-snake.svg">
-  <img alt="contribution heatmap" src="./assets/github-snake-dark.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/heatmap-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./assets/heatmap-light.svg">
+  <img alt="Vedanth's contribution heatmap" src="./assets/heatmap-dark.svg" width="850">
 </picture>
 
 </div>
