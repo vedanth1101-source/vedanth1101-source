@@ -1,0 +1,31 @@
+name: Generate Contribution Heatmap
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Fetch the live GitHub contribution grid (ghchart) and recolor it into the
+      # repo's Catppuccin palette, then commit the themed SVGs to assets/ so the
+      # README loads them by relative path. [skip ci] keeps the auto-commit from
+      # retriggering this workflow.
+      - name: Bake heatmap + commit to assets on main
+        run: |
+          python3 scripts/bake_heatmap.py "${{ github.repository_owner }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/heatmap-dark.svg assets/heatmap-light.svg
+          git diff --quiet --cached || git commit -m "chore: refresh contribution heatmap [skip ci]"
+          git push
