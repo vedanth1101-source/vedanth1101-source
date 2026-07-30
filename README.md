@@ -110,7 +110,7 @@ Translates plain-English questions into SQL over a local Ollama model, with a de
 
 ---
 
-### $ ./heatmap --year
+### $ ./heatmap 
 
 <div align="center">
 
