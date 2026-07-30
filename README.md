@@ -104,8 +104,6 @@ Translates plain-English questions into SQL over a local Ollama model, with a de
 
 <img width="850" src="https://streak-stats.demolab.com?user=vedanth1101-source&card_width=850&hide_border=true&background=1e1e2e&stroke=313244&ring=fab387&fire=f38ba8&currStreakLabel=fab387&sideLabels=a6adc8&dates=6c7086&currStreakNum=cdd6f4&sideNums=cdd6f4&v=2" alt="Contribution streak" />
 
-<img width="850" src="https://github-readme-activity-graph.vercel.app/graph?username=vedanth1101-source&hide_border=true&bg_color=1e1e2e&color=cdd6f4&line=fab387&point=89b4fa&area=true&area_color=fab387&title_color=fab387&v=2" alt="Contribution activity graph" />
-
 <img width="850" src="https://github-readme-stats-theta-gold-67.vercel.app/api/top-langs/?username=vedanth1101-source&layout=compact&langs_count=8&card_width=850&hide_border=true&title_color=fab387&text_color=cdd6f4&bg_color=1e1e2e" alt="Top languages" />
 
 </div>
