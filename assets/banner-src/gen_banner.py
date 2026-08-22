@@ -22,9 +22,9 @@ MONO_F = "CascadiaCode.ttf"
 
 # Taglines typed on the last prompt line (rotating). Kept truthful.
 MESSAGES = [
-    "rule engines · developer tooling · agentic systems",
-    "decisions in single-digit milliseconds",
-    "final-year CS @ SSN College of Engineering",
+    "Final-year Computer Science student",
+    "Exploring open-source projects",
+    "Building rule engines, developer tooling, and agentic systems",
 ]
 
 
@@ -139,23 +139,25 @@ def compose(t, typed_text, cursor_on):
     y = win[1] + titlebar_h + 84 * S
 
     def prompt(cmd_segs):
-        base = [("vedanth@portfolio", t["green"]), (" ", t["muted"]),
+        base = [("vedanth@github", t["green"]), (" ", t["muted"]),
                 ("~", t["blue"]), (" ", t["muted"]), ("%", t["peach"]),
                 ("  ", t["muted"])]
         return base + cmd_segs
 
-    draw_segs(d, cx0, y, prompt([("whoami", t["mauve"]), (" --name", t["yellow"])]), pf)
+    draw_segs(d, cx0, y, prompt([("whoami", t["mauve"])]), pf)
     y += 33 * S
 
     d.text((cx0, y), "VEDANTH  M  S", font=nf, fill=hex_rgb(t["name"]),
            stroke_width=max(1, S // 2), stroke_fill=hex_rgb(t["name"]))
     y += 122 * S
 
-    draw_segs(d, cx0, y, prompt([("cat", t["mauve"]), (" role.txt", t["blue"])]), pf)
+    draw_segs(d, cx0, y, prompt([("cat", t["mauve"]), (" about-me.txt", t["blue"])]), pf)
     y += 27 * S
-    draw_segs(d, cx0, y, [("Backend & ", t["muted"]),
-                          ("AI-Integrated", t["peach"]),
-                          (" Software Engineer", t["muted"])], of)
+    draw_segs(d, cx0, y, [("Software engineer building ", t["muted"]),
+                          ("backend", t["peach"]),
+                          (" and ", t["muted"]),
+                          ("AI-integrated", t["peach"]),
+                          (" systems", t["muted"])], of)
     y += 34 * S
 
     # last line: prompt prefix + typed tagline + blinking cursor
