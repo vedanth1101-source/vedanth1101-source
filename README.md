@@ -104,7 +104,7 @@ Translates plain-English questions into SQL over a local Ollama model, with a de
 
 <img width="850" src="https://github-readme-activity-graph.vercel.app/graph?username=vedanth1101-source&bg_color=1e1e2e&color=cdd6f4&line=fab387&point=cba6f7&area=true&area_color=fab387&hide_border=true&title_color=fab387&custom_title=Contribution%20Activity" alt="Contribution activity graph" />
 
-<img width="850" src="https://streak-stats.demolab.com?user=vedanth1101-source&card_width=850&hide_border=true&background=1e1e2e&stroke=313244&ring=fab387&fire=f38ba8&currStreakLabel=fab387&sideLabels=a6adc8&dates=6c7086&currStreakNum=cdd6f4&sideNums=cdd6f4&v=3" alt="Contribution streak" />
+<img width="850" src="./assets/streak.svg" alt="Contribution streak" />
 
 
 </div>

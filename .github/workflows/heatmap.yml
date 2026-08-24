@@ -1,4 +1,4 @@
-name: Generate Contribution Heatmap
+name: Refresh Contribution Cards
 
 on:
   schedule:
@@ -17,15 +17,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Fetch the live GitHub contribution grid (ghchart) and recolor it into the
-      # repo's Catppuccin palette, then commit the themed SVGs to assets/ so the
-      # README loads them by relative path. [skip ci] keeps the auto-commit from
+      # Bake the theme-matched heatmap (ghchart, recolored) and the streak card
+      # (streak-stats, kept only when it returns a valid card) into committed SVGs
+      # so the README loads them by relative path and they always render even when
+      # the upstream services rate-limit. [skip ci] keeps the auto-commit from
       # retriggering this workflow.
-      - name: Bake heatmap + commit to assets on main
+      - name: Bake cards + commit to assets on main
         run: |
           python3 scripts/bake_heatmap.py "${{ github.repository_owner }}"
+          python3 scripts/bake_streak.py "${{ github.repository_owner }}"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/heatmap-dark.svg assets/heatmap-light.svg
-          git diff --quiet --cached || git commit -m "chore: refresh contribution heatmap [skip ci]"
+          git add assets/heatmap-dark.svg assets/heatmap-light.svg assets/streak.svg
+          git diff --quiet --cached || git commit -m "chore: refresh contribution cards [skip ci]"
           git push
