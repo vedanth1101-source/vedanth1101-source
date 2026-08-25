@@ -102,7 +102,7 @@ Translates plain-English questions into SQL over a local Ollama model, with a de
 
 <img width="850" src="https://github-readme-stats-theta-gold-67.vercel.app/api?username=vedanth1101-source&show_icons=true&count_private=true&include_all_commits=true&hide_border=true&card_width=850&title_color=fab387&icon_color=89b4fa&text_color=cdd6f4&bg_color=1e1e2e&v=2" alt="GitHub stats" />
 
-<img width="850" src="https://github-readme-activity-graph.vercel.app/graph?username=vedanth1101-source&bg_color=1e1e2e&color=cdd6f4&line=fab387&point=cba6f7&area=true&area_color=fab387&hide_border=true&title_color=fab387&custom_title=Contribution%20Activity" alt="Contribution activity graph" />
+<img width="850" src="./assets/activity.svg" alt="Contribution activity graph" />
 
 <img width="850" src="./assets/streak.svg" alt="Contribution streak" />
 
