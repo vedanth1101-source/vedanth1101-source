@@ -20,7 +20,7 @@ FORM: user-pinned Terminal/TUI (chosen from three concepts). Banner rendered
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/banner-dark.gif">
   <source media="(prefers-color-scheme: light)" srcset="./assets/banner-light.gif">
-  <img alt="Vedanth M S — Backend & AI-Integrated Software Engineer" src="./assets/banner-dark.png" width="100%">
+  <img alt="Vedanth M S — Software Engineer" src="./assets/banner-dark.png" width="100%">
 </picture>
 
 </div>
