@@ -69,7 +69,7 @@ Moves business rules out of code and into a database, then evaluates transaction
 Turns a raw stack trace into a plain-English diagnosis and a suggested fix with Gemini, keeping a MySQL cache in front so a repeated error never pays for the model twice. Per-IP rate limiting and optional API-key auth guard the one endpoint that spends quota.<br>
 <sub>`Java 21` · `Spring Boot` · `React 19` · `Gemini` · `Railway` · `Vercel`</sub>
 
-**[farm-manager-ai/](https://github.com/vedanth1101-source/farm-manager-ai-poc)** &nbsp;·&nbsp; `local-first agentic platform`<br>
+**[farm-manager/](https://github.com/vedanth1101-source/farm-manager-ai-poc)** &nbsp;·&nbsp; `local-first agentic platform`<br>
 Translates plain-English questions into SQL over a local Ollama model, with a deterministic regex fallback for zero-downtime querying, a RAG knowledge base, and autonomous background agents.<br>
 <sub>`Java` · `Spring Boot` · `SQLite` · `Ollama` · `RAG`</sub>
 
